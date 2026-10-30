@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Pernikahan - Raka &amp; Sinta</title>
+<!--
+  ============================================================================
+  UNDANGAN DIGITAL - template gratis (MIT) oleh ptraaa
+  CARA PAKAI:
+  1. Ganti semua isi di blok CONFIG pada <script> di bagian bawah file ini.
+  2. Ganti foto: pakai URL foto Anda sendiri (Google Drive publik, Imgur, dsb).
+  3. Upload file ini ke hosting statis gratis (GitHub Pages, Netlify, Cloudflare
+     Pages) atau kirim sebagai satu file. Selesai, bagikan tautannya.
+  Fitur: sampul buka undangan, hitung mundur, jadwal acara, peta lokasi,
+  galeri, amplop digital, konfirmasi hadir (RSVP) via WhatsApp, musik latar.
+  ============================================================================
+-->
+<style>
+  :root{--gold:#b08d57;--ink:#3d3229;--paper:#faf6f0;--card:#ffffff}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--paper);color:var(--ink);text-align:center}
+  .wrap{max-width:520px;margin:0 auto;padding:24px 18px 60px}
+  .orn{color:var(--gold);font-size:22px;letter-spacing:6px}
+  h1{font-size:40px;font-weight:normal;margin:10px 0 2px}
+  h2{font-size:24px;font-weight:normal;color:var(--gold);margin:26px 0 8px}
+  p{line-height:1.65;font-size:16px}
+  .amp{font-size:30px;color:var(--gold)}
+  .photo{width:100%;border-radius:14px;margin:18px 0;box-shadow:0 6px 24px rgba(0,0,0,.15)}
+  .card{background:var(--card);border:1px solid #e9dfcf;border-radius:14px;padding:20px;margin:16px 0;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  .count{display:flex;gap:8px;justify-content:center;margin:14px 0}
+  .count div{background:var(--ink);color:#fff;border-radius:10px;padding:10px 0;width:70px}
+  .count b{display:block;font-size:22px}
+  .count span{font-size:11px;text-transform:uppercase;letter-spacing:1px}
+  .btn{display:inline-block;background:var(--gold);color:#fff;text-decoration:none;padding:12px 26px;border-radius:999px;margin:8px 4px;font-size:16px;border:none;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+  .gal{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .gal img{width:100%;height:170px;object-fit:cover;border-radius:10px}
+  #cover{position:fixed;inset:0;background:var(--ink);color:#f5ecdd;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:10;padding:24px}
+  #cover h1{color:#fff}
+  .small{font-size:13px;opacity:.75}
+  input,select{width:100%;padding:11px;border:1px solid #d8cbb2;border-radius:9px;margin:6px 0;font-size:15px;font-family:inherit}
+  footer{margin-top:34px;font-size:13px;opacity:.6}
+</style>
+</head>
+<body>
+
+<div id="cover">
+  <div class="orn">✦ ✦ ✦</div>
+  <p class="small">Undangan Pernikahan</p>
+  <h1 id="coverNames">Raka &amp; Sinta</h1>
+  <p id="coverDate">Sabtu, 14 Februari 2027</p>
+  <p class="small" style="margin-top:20px">Kepada Bapak/Ibu/Saudara/i<br><b id="guestName">Tamu Undangan</b></p>
+  <button class="btn" onclick="openInvitation()">Buka Undangan</button>
+</div>
+
+<div class="wrap">
+  <div class="orn">✦ ✦ ✦</div>
+  <p>Dengan memohon rahmat dan ridho Tuhan Yang Maha Esa,<br>kami bermaksud menyelenggarakan pernikahan kami</p>
+  <img class="photo" id="mainPhoto" src="https://picsum.photos/seed/wedding1/800/1000" alt="Foto mempelai">
+  <h1 id="groomName">Raka Pratama, S.T.</h1>
+  <p id="groomParents" class="small">Putra dari Bapak H. Pratama &amp; Ibu Hj. Pratama</p>
+  <div class="amp">&amp;</div>
+  <h1 id="brideName">Sinta Maharani, S.E.</h1>
+  <p id="brideParents" class="small">Putri dari Bapak Maharani &amp; Ibu Maharani</p>
+
+  <h2>Menghitung Hari</h2>
+  <div class="count">
+    <div><b id="cd">0</b><span>Hari</span></div>
+    <div><b id="ch">0</b><span>Jam</span></div>
+    <div><b id="cm">0</b><span>Menit</span></div>
+    <div><b id="cs">0</b><span>Detik</span></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Akad Nikah</h2>
+    <p id="akadInfo">Sabtu, 14 Februari 2027<br>Pukul 08.00 - 10.00 WIB<br>Masjid Agung Al-Azhar, Jakarta Selatan</p>
+    <a class="btn ghost" id="akadMap" href="https://maps.google.com/?q=Masjid+Agung+Al-Azhar+Jakarta" target="_blank" rel="noopener">Lihat Lokasi</a>
+  </div>
+  <div class="card">
+    <h2 style="margin-top:0">Resepsi</h2>
+    <p id="resepsiInfo">Sabtu, 14 Februari 2027<br>Pukul 11.00 - 13.00 WIB<br>Gedung Serbaguna Al-Azhar, Jakarta Selatan</p>
+    <a class="btn ghost" id="resepsiMap" href="https://maps.google.com/?q=Gedung+Serbaguna+Al-Azhar+Jakarta" target="_blank" rel="noopener">Lihat Lokasi</a>
+  </div>
+
+  <h2>Galeri Kami</h2>
+  <div class="gal" id="gallery">
+    <img src="https://picsum.photos/seed/wedding2/600/500" alt="Galeri 1">
+    <img src="https://picsum.photos/seed/wedding3/600/500" alt="Galeri 2">
+    <img src="https://picsum.photos/seed/wedding4/600/500" alt="Galeri 3">
+    <img src="https://picsum.photos/seed/wedding5/600/500" alt="Galeri 4">
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Amplop Digital</h2>
+    <p id="giftInfo">Doa restu Anda adalah hadiah terindah. Namun jika berkenan memberi tanda kasih:<br><b>BCA 1234567890 a.n. Raka Pratama</b></p>
+    <button class="btn ghost" onclick="copyRek()">Salin Nomor Rekening</button>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Konfirmasi Kehadiran</h2>
+    <input id="rsvpName" placeholder="Nama Anda">
+    <select id="rsvpStatus">
+      <option value="Hadir">Hadir</option>
+      <option value="Tidak Hadir">Tidak Hadir</option>
+      <option value="Masih Ragu">Masih Ragu</option>
+    </select>
+    <input id="rsvpCount" type="number" min="1" max="5" value="1" placeholder="Jumlah tamu">
+    <button class="btn" onclick="sendRsvp()">Kirim via WhatsApp</button>
+  </div>
+
+  <p style="margin-top:26px">Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
+  <h1 style="font-size:30px" id="footNames">Raka &amp; Sinta</h1>
+  <footer>Template undangan digital gratis oleh ptraaa - MIT License<br>github.com/Ptraaah/undangan-digital</footer>
+</div>
+
+<audio id="music" loop src="https://cdn.pixabay.com/audio/2022/10/25/audio_946b4a419b.mp3"></audio>
+
+<script>
+  /* ===================== CONFIG - GANTI BAGIAN INI ===================== */
+  const CONFIG = {
+    groom: "Raka Pratama, S.T.",
+    groomParents: "Putra dari Bapak H. Pratama & Ibu Hj. Pratama",
+    bride: "Sinta Maharani, S.E.",
+    brideParents: "Putri dari Bapak Maharani & Ibu Maharani",
+    shortNames: "Raka & Sinta",
+    dateText: "Sabtu, 14 Februari 2027",
+    targetDate: "2027-02-14T08:00:00+07:00",
+    akad: "Sabtu, 14 Februari 2027<br>Pukul 08.00 - 10.00 WIB<br>Masjid Agung Al-Azhar, Jakarta Selatan",
+    akadMap: "https://maps.google.com/?q=Masjid+Agung+Al-Azhar+Jakarta",
+    resepsi: "Sabtu, 14 Februari 2027<br>Pukul 11.00 - 13.00 WIB<br>Gedung Serbaguna Al-Azhar, Jakarta Selatan",
+    resepsiMap: "https://maps.google.com/?q=Gedung+Serbaguna+Al-Azhar+Jakarta",
+    mainPhoto: "https://picsum.photos/seed/wedding1/800/1000",
+    rekeningText: "BCA 1234567890 a.n. Raka Pratama",
+    rekeningNumber: "1234567890",
+    whatsapp: "6281234567890"
+  };
+  /* ==================================================================== */
+
+  const $ = id => document.getElementById(id);
+  $("coverNames").textContent = CONFIG.shortNames;
+  $("coverDate").textContent = CONFIG.dateText;
+  $("groomName").textContent = CONFIG.groom;
+  $("groomParents").textContent = CONFIG.groomParents;
+  $("brideName").textContent = CONFIG.bride;
+  $("brideParents").textContent = CONFIG.brideParents;
+  $("akadInfo").innerHTML = CONFIG.akad;
+  $("akadMap").href = CONFIG.akadMap;
+  $("resepsiInfo").innerHTML = CONFIG.resepsi;
+  $("resepsiMap").href = CONFIG.resepsiMap;
+  $("mainPhoto").src = CONFIG.mainPhoto;
+  $("giftInfo").innerHTML = "Doa restu Anda adalah hadiah terindah. Namun jika berkenan memberi tanda kasih:<br><b>" + CONFIG.rekeningText + "</b>";
+  $("footNames").textContent = CONFIG.shortNames;
+  document.title = "Undangan Pernikahan - " + CONFIG.shortNames;
+
+  const guest = new URLSearchParams(location.search).get("to");
+  if (guest) $("guestName").textContent = guest;
+
+  function openInvitation(){
+    $("cover").style.display = "none";
+    const m = $("music");
+    if (m) m.play().catch(()=>{});
+    window.scrollTo(0,0);
+  }
+  function tick(){
+    const diff = new Date(CONFIG.targetDate) - new Date();
+    if (diff <= 0) return;
+    $("cd").textContent = Math.floor(diff/864e5);
+    $("ch").textContent = Math.floor(diff/36e5)%24;
+    $("cm").textContent = Math.floor(diff/6e4)%60;
+    $("cs").textContent = Math.floor(diff/1e3)%60;
+  }
+  tick(); setInterval(tick, 1000);
+
+  function copyRek(){
+    navigator.clipboard.writeText(CONFIG.rekeningNumber).then(()=>alert("Nomor rekening tersalin"));
+  }
+  function sendRsvp(){
+    const text = "Halo " + CONFIG.shortNames + ", saya " + ($("rsvpName").value || "tamu") +
+      " mengonfirmasi: " + $("rsvpStatus").value + ", jumlah " + $("rsvpCount").value + " orang. Terima kasih atas undangannya.";
+    location.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(text);
+  }
+</script>
+</body>
+</html>
